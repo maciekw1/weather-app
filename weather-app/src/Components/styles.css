@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Recursive&display=swap');
 
+:root {
+    --backgroundTop: #1B7F7A;
+    --background: #4CABA6;
+    --content: #ffffbf;
+    --contentTop: #b6ea72;
+}
+
+
 .loader {
     height: 50vh;
     width: 100%;
@@ -11,20 +19,19 @@
 .refresher {
     width: 100%;
     height: 100%;
-    color: white;
+    color: var(--contentTop);
 }
 
 
 .main{
     margin: 10px;
     border-radius: 20px;
-    background-color: #01579b;
+    background-color: var(--background);
 }
 
 .top{
     height: 60px;
-    background-color: #424242;
-    color: whitesmoke;
+    background-color: var(--backgroundTop);
     padding: 10px;
     border-radius: 20px 20px 0 0;
     font-family: 'Recursive', sans-serif;
@@ -33,8 +40,8 @@
 }
 
 .header{
-    background-color: #424242;
-    color: whitesmoke;
+    background-color: var(--backgroundTop);
+    color: var(--contentTop);
     margin: 10px 0px 0px 10px;
     font-size: 25px;
     border-radius: 20px 20px 0 0;
@@ -52,17 +59,18 @@
 
 .day{
     padding: 15px;
-    color: whitesmoke;
+    color: var(--content);
     font-family: 'Recursive', sans-serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .temp{
     padding: 15px;
-    color: whitesmoke;
+    color: var(--content);
     font-family: 'Recursive', sans-serif;
     font-size: 18px;
+    font-weight: 800;
 }
 
 .flex{
@@ -72,27 +80,29 @@
 
 .sunrise-sunset{
     padding: 15px;
-    color: whitesmoke;
+    color: var(--content);
     font-family: 'Recursive', sans-serif;
     font-size: 16px;
+    font-weight: 800;
 }
 
 .description{
     padding: 15px;
-    color: whitesmoke;
+    color: var(--content);
     font-family: 'Recursive', sans-serif;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .forecast{
     border-radius: 20px;
-    background-color: #01579b;
-    color: whitesmoke;
+    background-color: var(--background);
+    color: var(--content);
     padding: 10px;
     margin: 10px;
     font-family: 'Recursive', sans-serif;
     font-size: 19px;
+    font-weight: 800;
 }
 
 .flex-forecast{

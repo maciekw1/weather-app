@@ -17,55 +17,53 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const WeatherIcon = styled.div`
-  color: whitesmoke;
+  color: #ffffbf;
 `;
 
 export default function Forecast(props, {weatherData}) {
 
-    const { forecast } = props;
+        const {forecast} = props;
 
-    console.log("Forecast", forecast);
+        const results = forecast.daily.map((item, index) => {
 
-    const results = forecast.map((item, index) => {
+            let weatherIcon = null;
 
-        let weatherIcon = null;
+            if (item.weather[0].main === 'Thunderstorm') {
+                weatherIcon = <FontAwesomeIcon icon={faBolt}/>;
+            } else if (item.weather[0].main === 'Drizzle') {
+                weatherIcon = <FontAwesomeIcon icon={faCloudRain}/>;
+            } else if (item.weather[0].main === 'Rain') {
+                weatherIcon = <FontAwesomeIcon icon={faCloudShowersHeavy}/>;
+            } else if (item.weather[0].main === 'Snow') {
+                weatherIcon = <FontAwesomeIcon icon={faSnowflake}/>;
+            } else if (item.weather[0].main === 'Clear') {
+                weatherIcon = <FontAwesomeIcon icon={faSun}/>;
+            } else if (item.weather[0].main === 'Clouds') {
+                weatherIcon = <FontAwesomeIcon icon={faCloud}/>;
+            } else {
+                weatherIcon = <FontAwesomeIcon icon={faSmog}/>;
+            }
 
-        if (item.description === 'Thunderstorm') {
-            weatherIcon = <FontAwesomeIcon icon={faBolt} />;
-        }else if (item.description === 'Drizzle') {
-            weatherIcon = <FontAwesomeIcon icon={faCloudRain} />;
-        } else if (item.description === 'Rain') {
-            weatherIcon = <FontAwesomeIcon icon={faCloudShowersHeavy} />;
-        } else if (item.description === 'Snow') {
-            weatherIcon = <FontAwesomeIcon icon={faSnowflake} />;
-        } else if (item.description === 'Clear') {
-            weatherIcon = <FontAwesomeIcon icon={faSun} />;
-        } else if (item.description === 'Clouds') {
-            weatherIcon = <FontAwesomeIcon icon={faCloud} />;
-        } else {
-            weatherIcon = <FontAwesomeIcon icon={faSmog} />;
-        }
+            if (index !== 0)//prevents repetition of current day data if it's earlier than 15:00
+                return (
+                    <div key={index} className="forecast">
+                        <div className="flex-forecast">
+                            <p style={{width: 100}}>{moment(item.dt * 1000).format("dddd")}</p>
 
-        if (index > 0) //prevents repetition of current day data if it's earlier than 15:00
+                            <WeatherIcon
+                                style={{fontSize: 25, marginTop: 4, paddingTop: 10}}>{weatherIcon}</WeatherIcon>
+
+                            <p style={{width: 70}}>
+                                {Math.round(item.temp.max)} &deg;C
+                            </p>
+                        </div>
+                    </div>
+                )
+        })
+
         return (
-            <div key={index} className="forecast">
-                <div className="flex-forecast">
-                    <p style={{width:100}}>{moment(item.dt_txt).format("dddd")}</p>
-
-                    <WeatherIcon style={{fontSize:25,marginTop:4,paddingTop:10}}>{weatherIcon}</WeatherIcon>
-
-                    <p style={{width:70}}>
-                        {item.temperature} &deg;C
-                    </p>
-                </div>
+            <div>
+                <List aria-label="forecast data">{results}</List>
             </div>
-        )
-    })
-
-    return(
-        <div>
-            <List aria-label="forecast data">{results}</List>
-        </div>
-    );
-
+        );
 }
