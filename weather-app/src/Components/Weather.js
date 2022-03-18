@@ -1,7 +1,6 @@
 import React from 'react';
 import './styles.css';
 import moment from 'moment';
-import { Button } from 'semantic-ui-react';
 import {
     faCloud,
     faBolt,
@@ -62,7 +61,7 @@ const CardExampleCard = ({weatherData}) => {
                 </div>
 
                 <div className="flex">
-                    <p className="temp">Temprature: {weatherData.main.temp} &deg;C</p>
+                    <p className="temp">Temprature: {Math.round(weatherData.main.temp)} &deg;C</p>
                     <p className="temp">Humidity: {weatherData.main.humidity} %</p>
                 </div>
 
