@@ -46,16 +46,18 @@ export default function Forecast(props, {weatherData}) {
 
             if (index !== 0)//prevents repetition of current day data if it's earlier than 15:00
                 return (
-                    <div key={index} className="forecast">
-                        <div className="flex-forecast">
-                            <p style={{width: 100}}>{moment(item.dt * 1000).format("dddd")}</p>
+                    <div className="container">
+                        <div key={index} className="forecast">
+                            <div className="flex-forecast">
+                                <p style={{width: 100}}>{moment(item.dt * 1000).format("dddd")}</p>
 
-                            <WeatherIcon
-                                style={{fontSize: 25, marginTop: 4, paddingTop: 10}}>{weatherIcon}</WeatherIcon>
+                                <WeatherIcon
+                                    style={{fontSize: 25, marginTop: 4, paddingTop: 10}}>{weatherIcon}</WeatherIcon>
 
-                            <p style={{width: 70}}>
-                                {Math.round(item.temp.max)} &deg;C
-                            </p>
+                                <p style={{width: 70}}>
+                                    {Math.round(item.temp.max)} &deg;C
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )
