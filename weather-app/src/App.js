@@ -32,11 +32,6 @@ function App() {
                 getForecast(lat, long)
                     .then(forecast => {
                         setForecast(forecast)
-
-                        console.log(forecast.daily[0]);
-                        console.log(forecast.daily[0].weather[0].main);
-                        const a = forecast.daily.map(item => item.weather[0].main);
-                        console.log([...a]);
                     })
             } else {
                 console.log(`No geolocation response. latitude: ${lat}, longitude ${long}`);
@@ -52,11 +47,10 @@ function App() {
 
   return (
     <div className="App">
-
         {(forecast.length !== 0) ?
             (<>
-                <Weather weatherData={data}/>
-                <Forecast forecast={forecast}/>
+                <Weather weatherData={data} />
+                <Forecast forecast={forecast} />
             </>) :
             (<div className="loader">
                 <Oval color="#1597bb" height={80} width={80}/>
@@ -65,4 +59,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

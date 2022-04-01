@@ -20,7 +20,7 @@ const WeatherIcon = styled.div`
   color: #ffffbf;
 `;
 
-export default function Forecast(props, {weatherData}) {
+export default function Forecast(props) {
 
         const {forecast} = props;
 
@@ -28,26 +28,26 @@ export default function Forecast(props, {weatherData}) {
 
             let weatherIcon = null;
 
-            if (item.weather[0].main === 'Thunderstorm') {
-                weatherIcon = <FontAwesomeIcon icon={faBolt}/>;
-            } else if (item.weather[0].main === 'Drizzle') {
-                weatherIcon = <FontAwesomeIcon icon={faCloudRain}/>;
-            } else if (item.weather[0].main === 'Rain') {
-                weatherIcon = <FontAwesomeIcon icon={faCloudShowersHeavy}/>;
-            } else if (item.weather[0].main === 'Snow') {
-                weatherIcon = <FontAwesomeIcon icon={faSnowflake}/>;
-            } else if (item.weather[0].main === 'Clear') {
-                weatherIcon = <FontAwesomeIcon icon={faSun}/>;
-            } else if (item.weather[0].main === 'Clouds') {
-                weatherIcon = <FontAwesomeIcon icon={faCloud}/>;
-            } else {
-                weatherIcon = <FontAwesomeIcon icon={faSmog}/>;
+
+            function setIcon(condition, icon) {
+                if (item.weather[0].main === condition) {
+                    weatherIcon = <FontAwesomeIcon icon={icon} />;
+                }
             }
+
+            setIcon('Thunderstorm', faBolt);
+            setIcon('Drizzle', faCloudRain);
+            setIcon('Rain', faCloudShowersHeavy);
+            setIcon('Snow', faSnowflake);
+            setIcon('Clear', faSun);
+            setIcon('Clouds', faCloud);
+            setIcon('Mist', faCloud);
+            setIcon('Smoke', faSmog);
 
             if (index !== 0)//prevents repetition of current day data if it's earlier than 15:00
                 return (
-                    <div className="container">
-                        <div key={index} className="forecast">
+                    <div key={index} className="container">
+                        <div className="forecast">
                             <div className="flex-forecast">
                                 <p style={{width: 100}}>{moment(item.dt * 1000).format("dddd")}</p>
 

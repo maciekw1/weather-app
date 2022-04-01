@@ -18,7 +18,6 @@ const WeatherIcon = styled.div`
       color: #ffffbf;
     `;
 
-
 const CardExampleCard = ({weatherData}) => {
 
     const refresh = () => {
@@ -27,23 +26,20 @@ const CardExampleCard = ({weatherData}) => {
 
     let weatherIcon = null;
 
-    if (weatherData.weather[0].main === 'Thunderstorm') {
-        weatherIcon = <FontAwesomeIcon icon={faBolt} />;
-    } else if (weatherData.weather[0].main === 'Drizzle') {
-        weatherIcon = <FontAwesomeIcon icon={faCloudRain} />;
-    } else if (weatherData.weather[0].main === 'Rain') {
-        weatherIcon = <FontAwesomeIcon icon={faCloudShowersHeavy} />;
-    } else if (weatherData.weather[0].main === 'Snow') {
-        weatherIcon = <FontAwesomeIcon icon={faSnowflake} />;
-    } else if (weatherData.weather[0].main === 'Clear') {
-        weatherIcon = <FontAwesomeIcon icon={faSun} />;
-    } else if (weatherData.weather[0].main === 'Clouds') {
-        weatherIcon = <FontAwesomeIcon icon={faCloud} />;
-    } else {
-        weatherIcon = <FontAwesomeIcon icon={faSmog} />;
-    }
+        function setIcon(condition, icon) {
+            if (weatherData.weather[0].main === condition) {
+                weatherIcon = <FontAwesomeIcon icon={icon} />;
+            }
+        }
 
-
+        setIcon('Thunderstorm', faBolt);
+        setIcon('Drizzle', faCloudRain);
+        setIcon('Rain', faCloudShowersHeavy);
+        setIcon('Snow', faSnowflake);
+        setIcon('Clear', faSun);
+        setIcon('Clouds', faCloud);
+        setIcon('Mist', faCloud);
+        setIcon('Smoke', faSmog);
 
     return (
         <div>
