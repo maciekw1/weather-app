@@ -1,8 +1,16 @@
-import './App.css';
 import React, { useEffect, useState } from "react";
 import Weather from "./Components/Weather";
 import Forecast from "./Components/Forecast";
 import { Oval } from "react-loader-spinner";
+import {
+    faBolt,
+    faCloud,
+    faCloudRain,
+    faCloudShowersHeavy,
+    faSmog,
+    faSnowflake,
+    faSun
+} from "@fortawesome/free-solid-svg-icons";
 
 function App() {
     const [lat, setLat] = useState(null);
@@ -45,12 +53,24 @@ function App() {
         ).then(res => res.json());
     }
 
+    const conditions = [
+        {condition: 'Thunderstorm', icon: faBolt},
+        {condition: 'Drizzle', icon: faCloudRain},
+        {condition: 'Rain', icon: faCloudShowersHeavy},
+        {condition: 'Snow', icon: faSnowflake},
+        {condition: 'Atmosphere', icon: faSmog},
+        {condition: 'Clear', icon: faSun},
+        {condition: 'Clouds', icon: faCloud},
+        {condition: 'Mist', icon: faCloud},
+        {condition: 'Smoke', icon: faSmog}
+    ];
+
   return (
     <div className="App">
         {(forecast.length !== 0) ?
             (<>
-                <Weather weatherData={data} />
-                <Forecast forecast={forecast} />
+                <Weather weatherData={data} conditions={conditions}/>
+                <Forecast forecast={forecast} conditions={conditions}/>
             </>) :
             (<div className="loader">
                 <Oval color="#1597bb" height={80} width={80}/>

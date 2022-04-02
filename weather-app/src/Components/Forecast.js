@@ -4,15 +4,6 @@ import {
 } from "@material-ui/core";
 import moment from 'moment';
 import './styles.css';
-import {
-    faCloud,
-    faBolt,
-    faCloudRain,
-    faCloudShowersHeavy,
-    faSnowflake,
-    faSun,
-    faSmog,
-} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -28,21 +19,15 @@ export default function Forecast(props) {
 
             let weatherIcon = null;
 
-
-            function setIcon(condition, icon) {
-                if (item.weather[0].main === condition) {
-                    weatherIcon = <FontAwesomeIcon icon={icon} />;
-                }
+            function setIcon(conditions) {
+                conditions.map(el => {
+                    if (item.weather[0].main === el.condition) {
+                        weatherIcon = <FontAwesomeIcon icon={el.icon} />;
+                    }
+                });
             }
 
-            setIcon('Thunderstorm', faBolt);
-            setIcon('Drizzle', faCloudRain);
-            setIcon('Rain', faCloudShowersHeavy);
-            setIcon('Snow', faSnowflake);
-            setIcon('Clear', faSun);
-            setIcon('Clouds', faCloud);
-            setIcon('Mist', faCloud);
-            setIcon('Smoke', faSmog);
+            setIcon(props.conditions);
 
             if (index !== 0)//prevents repetition of current day data if it's earlier than 15:00
                 return (

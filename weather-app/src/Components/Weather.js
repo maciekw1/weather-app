@@ -1,16 +1,7 @@
 import React from 'react';
 import './styles.css';
 import moment from 'moment';
-import {
-    faCloud,
-    faBolt,
-    faCloudRain,
-    faCloudShowersHeavy,
-    faSnowflake,
-    faSun,
-    faSmog,
-    faArrowsRotate,
-} from '@fortawesome/free-solid-svg-icons';
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,7 +9,7 @@ const WeatherIcon = styled.div`
       color: #ffffbf;
     `;
 
-const CardExampleCard = ({weatherData}) => {
+const CardExampleCard = ({weatherData, conditions}) => {
 
     const refresh = () => {
         window.location.reload();
@@ -26,20 +17,15 @@ const CardExampleCard = ({weatherData}) => {
 
     let weatherIcon = null;
 
-        function setIcon(condition, icon) {
-            if (weatherData.weather[0].main === condition) {
-                weatherIcon = <FontAwesomeIcon icon={icon} />;
+    function setIcon(conditions, weatherData) {
+        conditions.map(item => {
+            if (weatherData.weather[0].main === item.condition) {
+                  weatherIcon = <FontAwesomeIcon icon={item.icon} />;
             }
-        }
+        });
+    }
 
-        setIcon('Thunderstorm', faBolt);
-        setIcon('Drizzle', faCloudRain);
-        setIcon('Rain', faCloudShowersHeavy);
-        setIcon('Snow', faSnowflake);
-        setIcon('Clear', faSun);
-        setIcon('Clouds', faCloud);
-        setIcon('Mist', faCloud);
-        setIcon('Smoke', faSmog);
+    setIcon(conditions, weatherData);
 
     return (
         <div>
