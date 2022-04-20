@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Weather from "./Components/Weather";
-import Forecast from "./Components/Forecast";
 import { Oval } from "react-loader-spinner";
 import {
     faBolt,
@@ -11,47 +9,45 @@ import {
     faSnowflake,
     faSun
 } from "@fortawesome/free-solid-svg-icons";
+import Weather from "./components/Weather";
+import Forecast from "./components/Forecast";
+import { getUserLocation } from './utils/getUserLocation';
+import WeatherApi from './weatherApi';
 
-function App() {
+const weatherApi = new WeatherApi();
+
+export default function App() {
     const [lat, setLat] = useState(null);
     const [long, setLong] = useState(null);
     const [data, setData] = useState([]);
     const [forecast, setForecast] = useState([]);
 
     useEffect( () => {
+        const fetchData = async () => {
+            const { longitude, latitude } = await getUserLocation()
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    setLat(position.coords.latitude);
-                    setLong(position.coords.longitude);
-                });
-            } else {
-                console.log("Geolocation error");
-            }
+            setLat(latitude);
+            setLong(longitude);
 
-            if (lat !==  null && long !== null) {
-
-                fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
-                    .then(res => res.json())
-                    .then(weather => {
-                        setData(weather)
-                    });
-
-                getForecast(lat, long)
-                    .then(forecast => {
-                        setForecast(forecast)
-                    })
-            } else {
+            if (lat ===  null || long === null) {
                 console.log(`No geolocation response. latitude: ${lat}, longitude ${long}`);
+                return
             }
 
-    }, [lat,long])
+            const weatherData = await weatherApi.getCurrentWeather(lat, long)
+            setData(weatherData)
 
-    function getForecast(lat, long) {
-        return fetch(
-            `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,hourly,&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
-        ).then(res => res.json());
-    }
+            const forecastData = await weatherApi.getWeatherForecast(lat, long)
+            setForecast(forecastData)
+        }
+
+        if (!navigator.geolocation) {
+            console.log('Geolocation is not supported by your browser');
+            return
+        }
+
+        fetchData()
+    }, [lat,long])
 
     const conditions = [
         {condition: 'Thunderstorm', icon: faBolt},
@@ -79,5 +75,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
