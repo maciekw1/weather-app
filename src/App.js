@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Weather from "./components/Weather";
 import Forecast from "./components/Forecast";
-import { getUserLocation } from './utils/getUserLocation';
 import WeatherApi from './weatherApi';
 
 const weatherApi = new WeatherApi();
@@ -24,10 +23,11 @@ export default function App() {
 
     useEffect( () => {
         const fetchData = async () => {
-            const { longitude, latitude } = await getUserLocation()
-
-            setLat(latitude);
-            setLong(longitude);
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                setLat(latitude);
+                setLong(longitude);
+            });
 
             if (lat ===  null || long === null) {
                 console.log(`No geolocation response. latitude: ${lat}, longitude ${long}`);
